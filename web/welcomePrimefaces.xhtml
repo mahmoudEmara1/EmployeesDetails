@@ -1,0 +1,168 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
+    <f:view contentType="text/html">
+        <h:head>
+            <f:facet name="first">
+                <meta content='text/html; charset=UTF-8' http-equiv="Content-Type"/>
+                <title>Employee</title>
+            </f:facet>
+        </h:head>
+
+        <h:body>
+            <h:form >   
+                <p:panel header="New employee registration "  id="panel"  >    
+                    <p:messages id="msgs" />
+
+                    <p:panelGrid columns="2" >
+                        <p:outputLabel  value="Id:" />
+                        <p:inputText id="id" value="#{empBean.empobj.id}" >
+
+                            <f:ajax/>                    
+                        </p:inputText>
+
+
+
+                        <p:outputLabel for="name" value="Name:"  />
+                        <p:inputText id="name" value="#{empBean.empobj.name}" required="true" label="name">
+                            <f:ajax/>
+
+                        </p:inputText>
+                        <p:outputLabel value="phone" for="phone"  />
+                        <p:inputText id="phone" value="#{empBean.empobj.phone}" required="true" label="phone" >
+                            <f:validateLength minimum="5"/>-->
+                            <f:ajax/>
+                        </p:inputText>
+                        <p:outputLabel value="Department:"  for="d" />
+                        <p:inputText id="d" value="#{empBean.empobj.department}" label="department" required="true"   >
+
+                            <f:ajax/>
+                        </p:inputText>
+                    </p:panelGrid>
+                    <p:commandButton update="panel" value="Save Record" actionListener="#{empBean.saveEmployeeRecord()}"/>
+
+
+
+
+                </p:panel>
+            </h:form>
+
+            <p:panel header="show Employee" id="show">
+                <h:form id="showStudent">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Id:"   />
+                        <h:inputText value="#{empBean.empobj.id}"  />
+                        <h:commandButton  value="Show Student" action="#{empBean.retriveStudentDetailsById()}" />
+
+                        <h:dataTable  var="v"  value="#{empBean.empList}"  >
+                            <h:column>    				
+                                <f:facet name = "header">employee </f:facet><h:outputText style="font-size: larger  " value="#{v.name}"   />	      			
+                            </h:column> 
+                            <h:column>
+                                <f:facet name = "header">department</f:facet><h:outputText value="#{v.department}"  />	      			
+                            </h:column>
+                        </h:dataTable>            	                         
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>
+
+            <p:panel header="Search employee name" id="showName">
+                <h:form id="showEmp">
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Name:"   />
+                        <h:inputText value="#{empBean.empobj.name}"  />
+                        <p:commandButton update="dt"  value="Show Employee" action="#{empBean.retriveStudentDetailsByName()}" />
+
+                        <h:dataTable  id="dt" var="v"  value="#{empBean.empList}"  >
+                            <h:column>    				
+                                <f:facet name = "header">employee </f:facet><h:outputText style="font-size: larger  " value="#{v.name}"   />	      			
+                            </h:column> 
+                            <h:column>
+                                <f:facet name = "header">department</f:facet><h:outputText value="#{v.department}"  />	      			
+                            </h:column>
+                            <h:column>
+                                <f:facet name = "header">Id</f:facet><h:outputText value="#{v.id}"  />	      			
+                            </h:column>
+                        </h:dataTable>            	                         
+                    </h:panelGrid>
+                </h:form>
+            </p:panel>
+
+
+            <p:panel header="Update Employee details">
+
+
+
+                <h:form id="updateEmpRecord">
+                    <h:panelGrid columns="1">
+                        <h:outputLabel value="Id:" />
+
+                        <h:inputText value="#{empBean.empobj.id}"/>
+
+
+
+                        <h:outputLabel value="Name:" />
+
+                        <h:inputText value="#{empBean.empobj.name}" />
+
+                        <h:outputLabel value="Phone:" />
+
+                        <h:inputText value="#{empBean.empobj.phone}" />
+
+                        <h:outputLabel value="Department:"  />
+
+                        <h:inputText value="#{empBean.empobj.department}"/>
+
+                    </h:panelGrid>
+                    <h:commandButton value="Update Record" action="#{empBean.updateEmpDetails()}" />
+
+                </h:form>
+
+
+            </p:panel>
+
+
+            <p:panel header="Delet Employee by id">
+
+
+                <h:form id="deleteStudentById" >
+                    <h:panelGrid columns="2">
+
+                        <h:outputLabel value="Id:" />
+                        <h:inputText value="#{empBean.empobj.id}"  />
+                        <h:commandButton value="Delete Employee Record" action="#{empBean.deleteEmplRecord()}"  />
+                    </h:panelGrid>
+                </h:form>
+
+
+            </p:panel>
+
+
+
+            <p:panel  header="search name">
+                <p:selectOneMenu 
+                    converter="#{empBean.s}"
+
+                    value="#{empBean.empobj.name}"
+                    required="true" var="emp" >
+
+                    <f:selectItem itemLabel="select" itemValue=""/>
+
+                    <f:selectItems value="#{empBean.employeeList}"  
+                                   itemLabel="#{emp.name}" itemValue="#{emp}"/>
+
+                </p:selectOneMenu>
+            </p:panel>
+
+
+        </h:body>
+
+    </f:view>
+</html>
+
