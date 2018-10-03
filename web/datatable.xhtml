@@ -17,19 +17,20 @@
             <h:form id="LoadingForm">
                 <p:toolbar id="toolId">
                     <f:facet name="right">
-                        <p:commandButton action="#{empBean.loadAllEmps }"
-                                         update=":LoadingForm:ui-datatable-tablewrapper"
-                                         value="Download" icon="fa fa-fw fa-download" type="button"/>
-                        
-                        <p:commandButton value="Reset" action="#{empBean.reset }" 
-                                         icon="new-ico"
+                        <p:commandButton  action="#{empBean.loadAllEmps}" icon="fa fa-fw fa-download"
+                                          value="Download" 
+                                          update=":LoadingForm:ui-datatable-tablewrapper"
+                                           />
+
+                        <p:commandButton action="#{empBean.reset }" 
+                                         icon="new-ico" value="Reset" 
                                          update=":LoadingForm:ui-datatable-tablewrapper" />
 
                     </f:facet>
                 </p:toolbar>
                 <p:dataTable value="#{empBean.allEmps}" var="all" id="ui-datatable-tablewrapper"
-                             rowKey="#{all.id eq null ? all.hashCode() : all.id.longValue()}">
-
+                             rowKey="#{all.id eq null ? all.hashCode() : all.id.longValue()}"
+                          rows="4" paginator="true" rowsPerPageTemplate="5,10,15" >
                     <p:column>
                         <p:outputLabel value="#{all.name}"/>
                     </p:column>
